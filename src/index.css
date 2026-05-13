@@ -154,6 +154,10 @@ header div {
     border-radius: 20px;
 }
 
+.task-detail button:hover {
+    cursor: pointer;
+}
+
 .btn-navigate {
     margin-top: 30px;
     display: flex;
@@ -167,4 +171,8 @@ header div {
     border: 3px solid black;
     border-radius: 20px;
     
+}
+
+.btn-navigate button:hover {
+    cursor: pointer;
 }

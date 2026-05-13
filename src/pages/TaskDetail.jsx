@@ -34,7 +34,11 @@ export default function TaskDetail() {
                             }}
                         >BACK
                         </button>
-
+                            <button
+                            onClick={()=>{
+                                navigate(`/`)
+                            }}
+                            >Torna Alla lista</button>
                         <button
                             onClick={() => {
                                 navigate(`/task/${Number(id) + 1}`)
