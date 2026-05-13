@@ -1,41 +1,27 @@
 import { createContext, useState, useEffect, useContext } from "react";
+import useTasks from "../custom-hooks/useTasks";
+
 
 const GlobalContext = createContext();
 
 export default function GlobalContextProvider({ children }) {
 
-    const [taskList, setTaskList] = useState([]);
 
-    const backUrl = import.meta.env.VITE_BACKEND_URL;
+    const { addTask, removeTask, updateTask, getTask, task } = useTasks();
 
 
-    async function fetchJson(url) {
-        const resp = await fetch(url);
-        const data = await resp.json();
-        return data;
-    }
+   
 
 
     useEffect(() => {
-
-        async function getTasks() {
-            try {
-                const tasks = await fetchJson(`${backUrl}tasks`)
-                setTaskList(tasks)
-
-
-            } catch (error) {
-                console.error("Error ask to Loris:", error)
-            }
-        }
-        getTasks()
+        getTask();
     }, [])
 
 
 
 
     return (
-        <GlobalContext.Provider value={{ taskList, setTaskList }}>
+        <GlobalContext.Provider value={{ task, addTask, removeTask, updateTask, getTask }}>
             {children}
         </GlobalContext.Provider>
     )

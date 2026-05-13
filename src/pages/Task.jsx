@@ -6,7 +6,9 @@ import TaskRow from "../components/TaskRow";
 export default function Task() {
 
     //prendo i TASKS dal context globale:
-    const { taskList, setTaskList } = useGlobalContext();
+    const { task, addTask } = useGlobalContext();
+
+    addTask()
 
     return (
         <>
@@ -21,8 +23,8 @@ export default function Task() {
                         </tr>
                     </thead>
                     <tbody>
-                        {taskList.length > 0 && (<>
-                            {taskList.map((t) => (
+                        {task && (<>
+                            {task.map((t) => (
                                 <TaskRow
                                     key={t.id}
                                     task={t} />
