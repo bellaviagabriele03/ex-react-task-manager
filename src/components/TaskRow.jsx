@@ -9,7 +9,10 @@ export default memo(function TaskRow({ task }) {
         <>
             <tr>
                 <td>{title}</td>
-                <td>{status}</td>
+                <td
+                    className={status === "To do" ? "red" : status === "Doing" ? "yellow" : "green"}>
+                    {status}
+                </td>
                 <td>{createdAt}</td>
             </tr>
 
