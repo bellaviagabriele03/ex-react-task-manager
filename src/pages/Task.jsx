@@ -8,13 +8,13 @@ export default function Task() {
     //prendo i TASKS dal context globale:
     const { task, addTask } = useGlobalContext();
 
-    addTask()
-    console.log(task);
     
+
     return (
         <>
             <div className="container">
                 <h1>LISTA DI TUTTI I TASK:</h1>
+
                 <table className="list-task">
                     <thead>
                         <tr>
@@ -34,6 +34,8 @@ export default function Task() {
                     </tbody>
 
                 </table>
+
+
             </div>
 
         </>

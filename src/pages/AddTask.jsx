@@ -1,4 +1,5 @@
 import { useRef, useState } from "react"
+import { useGlobalContext } from "../context/GlobalContext";
 
 export default function AddTask() {
 
@@ -8,7 +9,7 @@ export default function AddTask() {
 
     const symbols = `!@#$%^&*()-_=+[]{}|;:'\\",.<>?/\`~`;
 
-
+    const { addTask } = useGlobalContext();
 
 
 
@@ -34,7 +35,7 @@ export default function AddTask() {
             status: status.current.value || "To do",
 
         }
-        console.log(result);
+        addTask()
 
     }
 
@@ -43,7 +44,9 @@ export default function AddTask() {
     return (
         <div className="container">
             <h1>AGGIUNGI UN NUOVO TASK !</h1>
-            <form onSubmit={handlerSubmit}>
+            <form
+                className="form-control"
+                onSubmit={handlerSubmit}>
                 <label>
                     NOME TASK:
                     <input

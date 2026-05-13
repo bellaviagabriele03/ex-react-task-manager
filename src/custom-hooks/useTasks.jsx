@@ -24,8 +24,8 @@ export default function useTasks() {
         }
     }
     
-    function addTask() {
-        console.log("funzione addTask")
+    function addTask(obj) {
+        
     }
 
     function removeTask() {
