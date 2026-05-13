@@ -1,5 +1,8 @@
 export default function AddTask() {
     return (
-        <h1>AGGIUNGI UN NUOVO TASK:</h1>
+        <div className="container">
+            <h1>AGGIUNGI UN NUOVO TASK !</h1>
+        </div>
+
     )
 }
