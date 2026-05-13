@@ -1,4 +1,5 @@
 import { useState, } from "react"
+import { data } from "react-router-dom";
 
 
 
@@ -23,9 +24,22 @@ export default function useTasks() {
             console.error("Error Ask To Loris", error)
         }
     }
-    
+
     function addTask(obj) {
-        
+        console.log(obj);
+
+        fetch(`${backUrl}tasks`, {
+            method: "POST",
+            headers: {
+                "content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                title: obj.title,
+                description: obj.description,
+                status: obj.status
+            })
+        }).then(resp => resp.json()).then(data => alert(`Task aggiunto correttamente, success: ${data.success}`)).catch(error => alert(`Errore impossibile aggiungere la Task ${error}`))
+
     }
 
     function removeTask() {

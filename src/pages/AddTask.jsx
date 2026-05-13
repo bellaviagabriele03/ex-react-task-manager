@@ -35,7 +35,7 @@ export default function AddTask() {
             status: status.current.value || "To do",
 
         }
-        addTask()
+        addTask(result)
 
     }
 
