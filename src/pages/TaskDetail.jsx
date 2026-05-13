@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import { useGlobalContext } from "../context/GlobalContext";
 
 export default function TaskDetail() {
@@ -7,11 +7,10 @@ export default function TaskDetail() {
 
     const { task } = useGlobalContext();
 
+    const navigate = useNavigate();
 
     //ricerca della task 
     const taskSearch = task.find(t => t.id === Number(id))
-
-
 
 
     return (
@@ -28,7 +27,22 @@ export default function TaskDetail() {
                             onClick={() => { console.log("Loris Eliminato, prossimo obbiettivo... Samuel") }}
                         >Elimina Task</button>
                     </div>
+                    <div className="btn-navigate">
+                        <button
+                            onClick={() => {
+                                navigate(-1)
+                            }}
+                        >BACK
+                        </button>
 
+                        <button
+                            onClick={() => {
+                                navigate(`/task/${Number(id) + 1}`)
+                            }}
+                        >
+                            NEXT
+                        </button>
+                    </div>
                 </>)}
 
             </div>
