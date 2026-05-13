@@ -8,7 +8,7 @@ export default function Header() {
         { name: "ADD TASK", path: "/addtask" },
     ]
 
-    
+
 
     return (
         <header>
