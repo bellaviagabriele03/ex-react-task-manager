@@ -13,8 +13,10 @@ export default function Header() {
     return (
         <header>
             <div>
-                {links.map((l) => (
-                    <NavLink to={l.path}>{l.name}</NavLink>
+                {links.map((l, i) => (
+                    <NavLink
+                        key={i}
+                        to={l.path}>{l.name}</NavLink>
                 ))}
             </div>
         </header>

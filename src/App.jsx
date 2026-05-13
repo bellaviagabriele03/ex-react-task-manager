@@ -2,22 +2,23 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 import DefaultLayout from "./layouts/DefaultLayout"
 import Task from "./pages/Task"
 import AddTask from "./pages/AddTask"
+import GlobalContextProvider from "./context/GlobalContext"
 function App() {
 
 
   return (
     <>
       <BrowserRouter>
+        <GlobalContextProvider>
+          <Routes>
 
-        <Routes>
+            <Route path="/" element={<DefaultLayout />}>
+              <Route path="/" element={<Task />} />
+              <Route path="/addtask" element={<AddTask />} />
 
-          <Route path="/" element={<DefaultLayout />}>
-            <Route path="/" element={<Task />} />
-            <Route path="/addtask" element={<AddTask />} />
-
-          </Route>
-        </Routes>
-
+            </Route>
+          </Routes>
+        </GlobalContextProvider>
       </BrowserRouter>
     </>
   )
