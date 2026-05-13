@@ -9,7 +9,8 @@ export default function Task() {
     const { task, addTask } = useGlobalContext();
 
     addTask()
-
+    console.log(task);
+    
     return (
         <>
             <div className="container">
