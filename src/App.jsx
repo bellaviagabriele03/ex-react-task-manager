@@ -15,7 +15,7 @@ function App() {
             <Route path="/" element={<DefaultLayout />}>
               <Route path="/" element={<Task />} />
               <Route path="/addtask" element={<AddTask />} />
-
+        
             </Route>
           </Routes>
         </GlobalContextProvider>
