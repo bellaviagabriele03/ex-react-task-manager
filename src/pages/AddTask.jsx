@@ -1,6 +1,6 @@
 import { useRef, useState } from "react"
 import { useGlobalContext } from "../context/GlobalContext";
-
+import { useNavigate } from "react-router-dom";
 export default function AddTask() {
 
     const [taskName, setTaskName] = useState("");
@@ -10,7 +10,7 @@ export default function AddTask() {
     const symbols = `!@#$%^&*()-_=+[]{}|;:'\\",.<>?/\`~`;
 
     const { addTask } = useGlobalContext();
-
+    const navigate = useNavigate();
 
 
     function handlerSubmit(e) {
@@ -36,6 +36,7 @@ export default function AddTask() {
 
         }
         addTask(result)
+        navigate(`/`)
 
     }
 

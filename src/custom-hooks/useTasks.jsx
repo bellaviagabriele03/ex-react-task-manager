@@ -41,8 +41,11 @@ export default function useTasks() {
 
     }
 
-    function removeTask() {
-        console.log("funzione removeTask")
+    function removeTask(id) {
+        fetch(`${backUrl}tasks/${id}`, {
+            method: "DELETE",
+
+        }).then(resp => resp.json()).then(data => alert("eliminazione Task effettuata !!")).catch(error => console.error(error))
     }
 
     function updateTask() {

@@ -5,7 +5,7 @@ export default function TaskDetail() {
 
     const { id } = useParams();
 
-    const { task } = useGlobalContext();
+    const { task, removeTask } = useGlobalContext();
 
     const navigate = useNavigate();
 
@@ -24,7 +24,11 @@ export default function TaskDetail() {
                         <p><strong>Status:</strong> {taskSearch.status}</p>
                         <p><strong>Creato il:</strong> {taskSearch.createdAt}</p>
                         <button
-                            onClick={() => { console.log("Loris Eliminato, prossimo obbiettivo... Samuel") }}
+                            onClick={() => {
+                                removeTask(Number(id))
+                                console.log("Loris Eliminato, prossimo obbiettivo... Samuel")
+                                navigate(`/`)
+                            }}
                         >Elimina Task</button>
                     </div>
                     <div className="btn-navigate">
@@ -34,11 +38,11 @@ export default function TaskDetail() {
                             }}
                         >BACK
                         </button>
-                            <button
-                            onClick={()=>{
+                        <button
+                            onClick={() => {
                                 navigate(`/`)
                             }}
-                            >Torna Alla lista</button>
+                        >Torna Alla lista</button>
                         <button
                             onClick={() => {
                                 navigate(`/task/${Number(id) + 1}`)

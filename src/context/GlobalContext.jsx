@@ -15,7 +15,7 @@ export default function GlobalContextProvider({ children }) {
 
     useEffect(() => {
         getTask();
-    }, [])
+    }, [task])
 
 
 
