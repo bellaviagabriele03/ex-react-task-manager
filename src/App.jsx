@@ -17,6 +17,7 @@ function App() {
               <Route path="/" element={<Task />} />
               <Route path="/addtask" element={<AddTask />} />
               <Route path="/task/:id" element={<TaskDetail />} />
+            
             </Route>
           </Routes>
         </GlobalContextProvider>

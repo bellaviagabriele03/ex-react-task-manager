@@ -10,12 +10,12 @@ export default function GlobalContextProvider({ children }) {
     const { addTask, removeTask, updateTask, getTask, task } = useTasks();
 
 
-   
+
 
 
     useEffect(() => {
         getTask();
-    }, [task])
+    }, [])
 
 
 
