@@ -26,7 +26,6 @@ export default function useTasks() {
     }
 
     function addTask(obj) {
-        console.log(obj);
 
         fetch(`${backUrl}tasks`, {
             method: "POST",
