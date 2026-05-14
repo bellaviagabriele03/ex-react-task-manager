@@ -40,7 +40,6 @@ export default function AddTask() {
 
     }
 
-    console.log("Rendering...");
 
     return (
         <div className="container">

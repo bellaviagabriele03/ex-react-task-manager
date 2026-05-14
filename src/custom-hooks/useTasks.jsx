@@ -26,7 +26,6 @@ export default function useTasks() {
     }
 
     function addTask(obj) {
-
         fetch(`${backUrl}tasks`, {
             method: "POST",
             headers: {
@@ -37,15 +36,25 @@ export default function useTasks() {
                 description: obj.description,
                 status: obj.status
             })
-        }).then(resp => resp.json()).then(data => alert(`Task aggiunto correttamente, success: ${data.success}`)).catch(error => alert(`Errore impossibile aggiungere la Task ${error}`))
-
+        })
+            .then(resp => resp.json())
+            .then(data => {
+                alert(`Task aggiunto correttamente, success: ${data.success}`);
+                getTask();
+            })
+            .catch(error => alert(`Errore impossibile aggiungere la Task ${error}`))
     }
 
     function removeTask(id) {
         fetch(`${backUrl}tasks/${id}`, {
             method: "DELETE",
-
-        }).then(resp => resp.json()).then(data => alert("eliminazione Task effettuata !!")).catch(error => console.error(error))
+        })
+            .then(resp => resp.json())
+            .then(data => {
+                alert("eliminazione Task effettuata !!");
+                getTask();
+            })
+            .catch(error => console.error(error))
     }
 
     function updateTask(id, obj) {
@@ -59,7 +68,13 @@ export default function useTasks() {
                 description: obj.description,
                 status: obj.status
             })
-        }).then(resp => resp.json()).then(data => alert(`TASK MODIFICATA !!, success: ${data.success}`)).catch(error => console.error(error))
+        })
+            .then(resp => resp.json())
+            .then(data => {
+                alert(`TASK MODIFICATA !!, success: ${data.success}`);
+                getTask();
+            })
+            .catch(error => console.error(error))
     }
 
 
