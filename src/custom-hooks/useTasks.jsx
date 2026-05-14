@@ -49,8 +49,8 @@ export default function useTasks() {
         setTasks(prev => prev.filter(task => task.id !== id))
     }
 
-    function updateTask(id, obj) {
-        fetch(`${backUrl}tasks/${id}`, {
+    async function updateTask(id, obj) {
+        const response = await fetch(`${backUrl}tasks/${id}`, {
             method: "PUT",
             headers: {
                 "content-Type": "application/json"
@@ -61,12 +61,10 @@ export default function useTasks() {
                 status: obj.status
             })
         })
-            .then(resp => resp.json())
-            .then(data => {
-                alert(`TASK MODIFICATA !!, success: ${data.success}`);
+        const { success, message, task } = await response.json()
+        if (!success) throw new Error(message)
+        setTasks(prev => prev.map(t => t.id === task.id ? task : t))
 
-            })
-            .catch(error => console.error(error))
     }
 
 

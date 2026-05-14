@@ -44,18 +44,22 @@ export default function TaskDetail() {
     }
 
 
-    function handelConfirmEdit() {
+    async function handelConfirmEdit() {
 
         const editTaskOBJ = {
             title: editName,
             status: editStatus,
             description: editDescrip
         }
-
-        updateTask(Number(id), editTaskOBJ)
-        setShowEdit(false)
-        // editFormRef.current.requestSubmit()
-        navigate("/")
+        try {
+            updateTask(Number(id), editTaskOBJ)
+            alert("Task modificata !")
+            setShowEdit(false)
+            navigate("/")
+        } catch (error) {
+            console.error(error)
+            alert(error.message)
+        }
     }
 
     return (

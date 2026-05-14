@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react"
+import { useState, useMemo, useCallback, useRef } from "react"
 import { useGlobalContext } from "../context/GlobalContext"
 import TaskRow from "../components/TaskRow";
 
@@ -10,6 +10,8 @@ export default function Task() {
 
     const [sortBy, setSortBy] = useState("createdAt");
     const [sortOrder, setSortOrder] = useState(1);
+    const [debouncedQuery, setDebouncedQuery] = useState("");
+    const searchInputRef = useRef();
 
     function handleSort(column) {
         if (sortBy === column) {
@@ -20,27 +22,52 @@ export default function Task() {
         }
     }
 
+    const debounced = useCallback(
+        (() => {
+            let timer;
+            return (value) => {
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                    setDebouncedQuery(value);
+                }, 300);
+            };
+        })(),
+        []
+    );
+
     const sortedTasks = useMemo(() => {
         if (!tasks) return [];
-        return [...tasks].sort((a, b) => {
-            if (sortBy === "title") {
-                return a.title.localeCompare(b.title) * sortOrder;
-            }
-            if (sortBy === "status") {
-                return (STATUS_ORDER[a.status] - STATUS_ORDER[b.status]) * sortOrder;
-            }
-            if (sortBy === "createdAt") {
-                return (new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()) * sortOrder;
-            }
-            return 0;
-        });
-    }, [tasks, sortBy, sortOrder]);
+        return [...tasks]
+            .filter(t => t.title.toLowerCase().includes(debouncedQuery.toLowerCase()))
+            .sort((a, b) => {
+                if (sortBy === "title") {
+                    return a.title.localeCompare(b.title) * sortOrder;
+                }
+                if (sortBy === "status") {
+                    return (STATUS_ORDER[a.status] - STATUS_ORDER[b.status]) * sortOrder;
+                }
+                if (sortBy === "createdAt") {
+                    return (new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()) * sortOrder;
+                }
 
+                return 0;
+            });
+    }, [tasks, sortBy, sortOrder, debouncedQuery]);
     return (
         <>
             <div className="container">
                 <h1>LISTA DI TUTTI I TASK:</h1>
+                <div className="search-bar">
+                    <label>
+                        <h3>Cerca una task:</h3>
+                        <input
+                            placeholder="es: Chiamare il dottore"
+                            ref={searchInputRef}
+                            onChange={(e) => debounced(e.target.value)}
+                            type="text" />
+                    </label>
 
+                </div>
                 <table className="list-task">
                     <thead>
                         <tr>
