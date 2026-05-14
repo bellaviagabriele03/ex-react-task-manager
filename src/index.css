@@ -67,6 +67,11 @@ header div {
     cursor: pointer;
 }
 
+.list-task thead th.th-active {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
 
 
 .red {

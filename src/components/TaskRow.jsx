@@ -1,5 +1,5 @@
 import { memo } from "react"
-import { NavLink } from "react-router-dom";
+import { data, NavLink } from "react-router-dom";
 
 export default memo(function TaskRow({ task }) {
 
@@ -18,7 +18,7 @@ export default memo(function TaskRow({ task }) {
                     className={status === "To do" ? "red" : status === "Doing" ? "yellow" : "green"}>
                     {status}
                 </td>
-                <td>{createdAt}</td>
+                <td>{new Date(createdAt).toLocaleDateString()}</td>
             </tr>
 
         </>
