@@ -6,7 +6,7 @@ const STATUS_ORDER = { "To do": 0, "Doing": 1, "Done": 2 };
 
 export default function Task() {
 
-    const { task } = useGlobalContext();
+    const { tasks } = useGlobalContext();
 
     const [sortBy, setSortBy] = useState("createdAt");
     const [sortOrder, setSortOrder] = useState(1);
@@ -21,8 +21,8 @@ export default function Task() {
     }
 
     const sortedTasks = useMemo(() => {
-        if (!task) return [];
-        return [...task].sort((a, b) => {
+        if (!tasks) return [];
+        return [...tasks].sort((a, b) => {
             if (sortBy === "title") {
                 return a.title.localeCompare(b.title) * sortOrder;
             }
@@ -34,7 +34,7 @@ export default function Task() {
             }
             return 0;
         });
-    }, [task, sortBy, sortOrder]);
+    }, [tasks, sortBy, sortOrder]);
 
     return (
         <>

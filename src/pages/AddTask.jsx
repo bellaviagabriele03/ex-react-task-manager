@@ -13,7 +13,7 @@ export default function AddTask() {
     const navigate = useNavigate();
 
 
-    function handlerSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
 
         const symbolsArray = symbols.split("")
@@ -35,7 +35,18 @@ export default function AddTask() {
             status: status.current.value || "To do",
 
         }
-        addTask(result)
+
+        try {
+            await addTask(result);
+            alert("Task aggiunto !!");
+            setTaskName("")
+            description.current.value = "";
+            status.current.value = ""
+
+        } catch (error) {
+            alert(error.message)
+        }
+
         navigate(`/`)
 
     }
@@ -46,7 +57,7 @@ export default function AddTask() {
             <h1>AGGIUNGI UN NUOVO TASK !</h1>
             <form
                 className="form-control"
-                onSubmit={handlerSubmit}>
+                onSubmit={handleSubmit}>
                 <label>
                     NOME TASK:
                     <input

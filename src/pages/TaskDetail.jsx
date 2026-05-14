@@ -7,15 +7,15 @@ import EditTaskModal from "../components/EditTaskModal";
 export default function TaskDetail() {
 
     const { id } = useParams();
-    const { task, removeTask, updateTask } = useGlobalContext();
+    const { tasks, removeTask, updateTask } = useGlobalContext();
     const navigate = useNavigate();
 
     const [showModal, setShowModal] = useState(false);
     const [showEdit, setShowEdit] = useState(false)
-    const currentIndex = task.findIndex(t => t.id === Number(id));
-    const taskSearch = task[currentIndex];
-    const prevTask = currentIndex > 0 ? task[currentIndex - 1] : null;
-    const nextTask = currentIndex < task.length - 1 ? task[currentIndex + 1] : null;
+    const currentIndex = tasks.findIndex(t => t.id === Number(id));
+    const taskSearch = tasks[currentIndex];
+    const prevTask = currentIndex > 0 ? tasks[currentIndex - 1] : null;
+    const nextTask = currentIndex < tasks.length - 1 ? tasks[currentIndex + 1] : null;
 
     const [editName, setEditName] = useState(taskSearch?.title)
     const [editStatus, setEditStatus] = useState(taskSearch?.status)
@@ -32,10 +32,15 @@ export default function TaskDetail() {
     }, [taskSearch]);
 
 
-    function handleConfirmDelete() {
-        removeTask(Number(id));
-        setShowModal(false);
-        navigate("/");
+    async function handleConfirmDelete() {
+        try {
+            await removeTask(Number(id));
+            alert("Task eliminato !")
+            setShowModal(false);
+            navigate("/");
+        } catch (error) {
+            alert(error.message)
+        }
     }
 
 

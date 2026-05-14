@@ -7,31 +7,22 @@ import { data } from "react-router-dom";
 
 export default function useTasks() {
 
-    const [task, setTask] = useState([])
+    const [tasks, setTasks] = useState([])
     const backUrl = import.meta.env.VITE_BACKEND_URL;
 
-    async function fetchJson(url) {
-        const resp = await fetch(url)
-        const data = await resp.json()
-        return data;
-    }
 
-    async function getTask() {
-        try {
-            const taskFetch = await fetchJson(`${backUrl}tasks`);
-            setTask(taskFetch)
-        } catch (error) {
-            console.error("Error Ask To Loris", error)
-        }
-    }
 
 
     useEffect(() => {
-        getTask()
+        fetch(`${backUrl}tasks`)
+            .then(resp => resp.json())
+            .then(data => setTasks(data))
+            .catch(error => console.error(error))
+
     }, [])
 
-    function addTask(obj) {
-        fetch(`${backUrl}tasks`, {
+    async function addTask(obj) {
+        const response = await fetch(`${backUrl}tasks`, {
             method: "POST",
             headers: {
                 "content-Type": "application/json"
@@ -42,24 +33,20 @@ export default function useTasks() {
                 status: obj.status
             })
         })
-            .then(resp => resp.json())
-            .then(data => {
-                alert(`Task aggiunto correttamente, success: ${data.success}`);
-                getTask();
-            })
-            .catch(error => console.error(`Errore impossibile aggiungere la Task ${error}`))
+        const { success, message, task } = await response.json()
+        if (!success) throw new Error(message)
+
+        setTasks(prev => [...prev, task])
+
     }
 
-    function removeTask(id) {
-        fetch(`${backUrl}tasks/${id}`, {
+    async function removeTask(id) {
+        const response = await fetch(`${backUrl}tasks/${id}`, {
             method: "DELETE",
         })
-            .then(resp => resp.json())
-            .then(data => {
-                alert("eliminazione Task effettuata !!");
-                getTask();
-            })
-            .catch(error => console.error(error))
+        const { success, message, } = await response.json()
+        if (!success) throw new Error(message)
+        setTasks(prev => [...prev])
     }
 
     function updateTask(id, obj) {
@@ -77,11 +64,11 @@ export default function useTasks() {
             .then(resp => resp.json())
             .then(data => {
                 alert(`TASK MODIFICATA !!, success: ${data.success}`);
-                getTask();
+
             })
             .catch(error => console.error(error))
     }
 
 
-    return { addTask, removeTask, updateTask, task, getTask }
+    return { addTask, removeTask, updateTask, tasks, }
 }
