@@ -46,7 +46,7 @@ export default function useTasks() {
         })
         const { success, message, } = await response.json()
         if (!success) throw new Error(message)
-        setTasks(prev => [...prev])
+        setTasks(prev => prev.filter(task => task.id !== id))
     }
 
     function updateTask(id, obj) {
