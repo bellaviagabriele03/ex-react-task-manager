@@ -1,4 +1,4 @@
-import { useState, } from "react"
+import { useEffect, useState, } from "react"
 import { data } from "react-router-dom";
 
 
@@ -24,6 +24,11 @@ export default function useTasks() {
             console.error("Error Ask To Loris", error)
         }
     }
+
+
+    useEffect(() => {
+        getTask()
+    }, [])
 
     function addTask(obj) {
         fetch(`${backUrl}tasks`, {

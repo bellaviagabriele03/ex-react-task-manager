@@ -7,21 +7,10 @@ const GlobalContext = createContext();
 export default function GlobalContextProvider({ children }) {
 
 
-    const { addTask, removeTask, updateTask, getTask, task } = useTasks();
-
-
-
-
-
-    useEffect(() => {
-        getTask();
-    }, [])
-
-
-
+    const taskData = useTasks();
 
     return (
-        <GlobalContext.Provider value={{ task, addTask, removeTask, updateTask, getTask }}>
+        <GlobalContext.Provider value={{ ...taskData }}>
             {children}
         </GlobalContext.Provider>
     )
