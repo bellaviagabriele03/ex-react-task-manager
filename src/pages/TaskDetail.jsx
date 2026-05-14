@@ -1,4 +1,4 @@
-import { use, useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../context/GlobalContext";
 import Modal from "../components/Modal";
@@ -12,13 +12,24 @@ export default function TaskDetail() {
 
     const [showModal, setShowModal] = useState(false);
     const [showEdit, setShowEdit] = useState(false)
-    const taskSearch = task.find(t => t.id === Number(id));
+    const currentIndex = task.findIndex(t => t.id === Number(id));
+    const taskSearch = task[currentIndex];
+    const prevTask = currentIndex > 0 ? task[currentIndex - 1] : null;
+    const nextTask = currentIndex < task.length - 1 ? task[currentIndex + 1] : null;
 
-    //state per gli input di modifica della task
     const [editName, setEditName] = useState(taskSearch?.title)
     const [editStatus, setEditStatus] = useState(taskSearch?.status)
     const [editDescrip, setEditDescrip] = useState(taskSearch?.description)
     const editFormRef = useRef();
+
+    // Sincronizza gli stati edit quando taskSearch arriva dopo la chiamata API asincrona
+    useEffect(() => {
+        if (taskSearch) {
+            setEditName(taskSearch.title);
+            setEditStatus(taskSearch.status);
+            setEditDescrip(taskSearch.description);
+        }
+    }, [taskSearch]);
 
 
     function handleConfirmDelete() {
@@ -56,9 +67,9 @@ export default function TaskDetail() {
                         <button onClick={() => setShowEdit(true)}>Modifica Task</button>
                     </div>
                     <div className="btn-navigate">
-                        <button onClick={() => navigate(-1)}>BACK</button>
+                        <button onClick={() => navigate(`/task/${prevTask.id}`)} disabled={!prevTask}>BACK</button>
                         <button onClick={() => navigate("/")}>Torna Alla lista</button>
-                        <button onClick={() => navigate(`/task/${Number(id) + 1}`)}>NEXT</button>
+                        <button onClick={() => navigate(`/task/${nextTask.id}`)} disabled={!nextTask}>NEXT</button>
                     </div>
                 </>)}
             </div>

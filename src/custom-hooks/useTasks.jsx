@@ -42,7 +42,7 @@ export default function useTasks() {
                 alert(`Task aggiunto correttamente, success: ${data.success}`);
                 getTask();
             })
-            .catch(error => alert(`Errore impossibile aggiungere la Task ${error}`))
+            .catch(error => console.error(`Errore impossibile aggiungere la Task ${error}`))
     }
 
     function removeTask(id) {

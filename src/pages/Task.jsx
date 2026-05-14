@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, useState, useMemo } from "react"
 import { useGlobalContext } from "../context/GlobalContext"
 import TaskRow from "../components/TaskRow";
 
@@ -8,7 +8,15 @@ export default function Task() {
     //prendo i TASKS dal context globale:
     const { task, addTask } = useGlobalContext();
 
-    
+    const [sortBy, setSortBy] = useState()
+    const [sortOrder, setSortOrder] = useState()
+
+
+    useMemo(() => {
+
+        
+    }, [task, sortBy, sortOrder])
+
 
     return (
         <>
@@ -18,9 +26,9 @@ export default function Task() {
                 <table className="list-task">
                     <thead>
                         <tr>
-                            <th>Nome Task</th>
-                            <th>status</th>
-                            <th>creata</th>
+                            <th onClick={() => { console.log("ordino le task per nome") }}>Nome Task</th>
+                            <th onClick={() => { console.log("ordino le task per status") }}>status</th>
+                            <th onClick={() => { console.log("ordino le task per data di creazione") }}>creata</th>
                         </tr>
                     </thead>
                     <tbody>
