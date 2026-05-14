@@ -48,8 +48,18 @@ export default function useTasks() {
         }).then(resp => resp.json()).then(data => alert("eliminazione Task effettuata !!")).catch(error => console.error(error))
     }
 
-    function updateTask() {
-        console.log("funzione updateTask")
+    function updateTask(id, obj) {
+        fetch(`${backUrl}tasks/${id}`, {
+            method: "PUT",
+            headers: {
+                "content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                title: obj.title,
+                description: obj.description,
+                status: obj.status
+            })
+        }).then(resp => resp.json()).then(data => alert(`TASK MODIFICATA !!, success: ${data.success}`)).catch(error => console.error(error))
     }
 
 
