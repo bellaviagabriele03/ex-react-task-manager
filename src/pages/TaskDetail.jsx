@@ -4,6 +4,9 @@ import { useGlobalContext } from "../context/GlobalContext";
 import Modal from "../components/Modal";
 import EditTaskModal from "../components/EditTaskModal";
 
+const symbols = `!@#$%^&*()-_=+[]{}|;:'\\",.<>?/\`~`;
+
+
 export default function TaskDetail() {
 
     const { id } = useParams();
@@ -45,6 +48,19 @@ export default function TaskDetail() {
 
 
     async function handelConfirmEdit() {
+
+
+        const symbolArray = symbols.split("")
+        const titleArray = editName.split("")
+
+        const nameValid = titleArray.some((l) => {
+            return symbolArray.includes(l)
+        })
+
+        if (nameValid) {
+            alert("Errore il nome non può contere caratteri speciali !")
+            return
+        }
 
         const editTaskOBJ = {
             title: editName,
